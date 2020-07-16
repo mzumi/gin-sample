@@ -1,6 +1,9 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/mzumi/gin-sample/handler"
+)
 
 func main() {
 	r := setupRouter()
@@ -9,11 +12,7 @@ func main() {
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.GET("/ping", handler.PingGet())
 
 	return r
 }
