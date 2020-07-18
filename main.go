@@ -13,6 +13,7 @@ func main() {
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/ping", handler.PingGet())
+	r.POST("/article", handler.ArticleCreate())
 
 	return r
 }
