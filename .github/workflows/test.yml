@@ -34,14 +34,14 @@ jobs:
       run: go build -v .
 
     - name: Create Database
-      run: createdb -h 127.0.0.1 -p 5432 -U root -e gin_sample_test
+      run: createdb -h 127.0.0.1 -p 5432 -U postgres -e gin_sample_test
 
     - name: Test
       run: go test -v .
       env:
         DB_HOST: 127.0.0.1
         DB_PORT: 5432
-        DB_USER: root
+        DB_USER: postgres
         DB_NAME: gin_sample_test
         DB_PASSWORD: ''
         DB_SSLMODE: disable
