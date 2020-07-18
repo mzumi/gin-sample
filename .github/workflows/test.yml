@@ -6,8 +6,17 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    steps:
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
+    steps:
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
@@ -26,5 +35,15 @@ jobs:
     - name: Build
       run: go build -v .
 
+    - name: Create Database
+      run: createdb -h 127.0.0.1 -p 5432 -U root -e gin_sample_test -W password
+
     - name: Test
       run: go test -v .
+      env:
+        DB_HOST: 127.0.0.1
+        DB_PORT: 5432
+        DB_USER: root
+        DB_NAME: gin_sample_test
+        DB_PASSWORD: password
+        DB_SSLMODE: disable
