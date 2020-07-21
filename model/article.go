@@ -10,9 +10,27 @@ type Article struct {
 	Text  string
 }
 
-func (a *Article) Create(title string, text string) {
-	a.Title = title
-	a.Text = text
+func NewArticle(title string, text string) *Article {
+	a := &Article{Title: title, Text: text}
+	return a
+}
 
+func (a *Article) Create() {
 	db.Create(a)
+}
+
+func (a *Article) Save() {
+	db.Save(a)
+}
+
+func FirstArticle(id int) *Article {
+	article := &Article{}
+
+	db.First(article, id)
+	return article
+}
+
+func DeleteArticle(id int) {
+	a := FirstArticle(id)
+	db.Delete(a)
 }
