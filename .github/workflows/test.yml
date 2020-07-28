@@ -39,4 +39,8 @@ jobs:
       - name: Test
         run: go test -v .
         env:
-          DB_CONNECT: host=127.0.0.1 port=5432 user=postgres dbname=gin_sample_test sslmode=disable
+          POSTGRES_HOST: 127.0.0.1
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_DB_NAME: gin_sample_test
+          POSTGRES_SSLMODE: disable
